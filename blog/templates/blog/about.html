@@ -1,0 +1,74 @@
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <h2>Ships</h2>
+    <article class="media content-section">
+        <div class="media-body">
+            <h5>Current requirements</h5>
+            <div class="article-metadata">
+                <a class="mr-2" href="some post">will be link to source post</a>
+            </div>
+            <div class="article-metadata">
+                <a class="mr-2" href="title">possible link to equation page</a>
+            </div>
+            <p class="article-content">Equation to calculate current requirements</p>
+        </div>
+    </article>
+    <article class="media content-section">
+        <div class="media-body">
+            <h5>Anode surface</h5>
+            <div class="article-metadata">
+                <a class="mr-2" href="some post">post link</a>
+            </div>
+            <div class="article-metadata">
+                <a class="mr-2" href="title">link to equation page</a>
+            </div>
+            <p class="article-content">Output is required number or surface per anode type </p>
+        </div>
+    </article>
+
+    <h2>Wind Turbines</h2>
+    <article class="media content-section">
+        <div class="media-body">
+            <h5>Example</h5>
+            <div class="article-metadata">
+                <a class="mr-2" href="some post">link to post</a>
+            </div>
+            <div class="article-metadata">
+                <a class="mr-2" href="title">equation page</a>
+            </div>
+            <p class="article-content">Example equation abstract</p>
+        </div>
+    </article>
+    <article class="media content-section">
+        <div class="media-body">
+            <h5>Equation name</h5>
+            <div class="article-metadata">
+                <a class="mr-2" href="some post">Example post link</a>
+            </div>
+            <div class="article-metadata">
+                <a class="mr-2" href="title">Equation page</a>
+            </div>
+            <p class="article-content">Equation short explanation</p>
+        </div>
+    </article>
+
+    <h2>Offshore Structures</h2>
+
+
+    <div class="content-section">
+        <form method="POST">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Anodes Mass calculation (M)</legend>
+                <legend class="border-bottom mb-4">M = (Ic(mean) * tf * 8769) / (u * e)</legend>
+                {{ form|crispy }}
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Calculate</button>
+                <a class="article-content">{{ result }}</a>
+            </div>
+        </form>
+    </div>
+
+{% endblock content %}
