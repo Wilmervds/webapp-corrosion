@@ -10,6 +10,27 @@ from django.views.generic import (
 )
 from .models import Post
 from .forms import NameForm
+# PDF test
+from django.core.files.storage import FileSystemStorage
+from django.http import HttpResponse
+from django.template.loader import render_to_string
+
+from weasyprint import HTML
+
+
+def html_to_pdf_view(request):
+    html_string = render_to_string('blog/about.html', {'title': 'About', 'form': NameForm()})
+
+    html = HTML(string=html_string)
+    html.write_pdf(target='test.pdf');
+
+    fs = FileSystemStorage('C:/webapp/git')
+    with fs.open('test.pdf') as pdf:
+        response = HttpResponse(pdf, content_type='application/pdf')
+        response['Content-Disposition'] = 'attachment; filename="test.pdf"'
+        return response
+
+    return response
 
 
 def home(request):
@@ -99,3 +120,4 @@ def about(request):
         form = NameForm()
 
     return render(request, 'blog/about.html', {'title': 'About', 'form': NameForm()})
+
