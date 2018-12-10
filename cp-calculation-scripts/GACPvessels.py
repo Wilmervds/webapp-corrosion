@@ -50,7 +50,7 @@ import numpy as np
 
 # Explanation below: each array element has two elements, first is the part and second is
 # recommended current densitity in mA/m2
-idens = [['hull', 15], ['rudder', 80], ['propeller', 50], ['ssring', 50],
+idens = [['hull', 20], ['rudder', 80], ['propeller', 50], ['ssring', 50],
             ['bowthrust', 25], ['seachests', 600]]
             
 # Recommended coating breakdown factors constants in a simple array
@@ -63,11 +63,11 @@ cbfc = [[1, 1, 0.10, 0.10], [1, 2, 0.10, 0.05], [2, 1, 0.05, 0.025], [2, 2, 0.05
 # Temporary test input variables
 # ------------------------------
 ##part for current demand
-part = "rudder"
+part = "hull"
 ##hull
-length = 245.0
-breadth = 30.0
-draft = 9.75
+length = 127.50
+breadth = 28.0
+draft = 10.75
 cb = 0.6
 
 ##rudder
@@ -77,6 +77,9 @@ rfheight = 4.48
 # Example tunnel, nozzle
 diam = 2.60
 tlength = 1.15
+
+# Coating presence
+iscoat = False
 
 # Example coating breakdown factor
 t = 0.5
@@ -102,12 +105,15 @@ def calc_prop_sa(pdiam):
 # Calculation of coating breakdown factor (f)
 
 def cbf(categ, depth, t, kind):
-    depth = 1 if depth < 30 else 2
-    for i in range(len(cbfc)):
-        if cbfc[i][0] == categ and cbfc[i][1] == depth:
-            a = cbfc[i][2]
-            b = cbfc[i][3]
-    cbf = a + b * t / 2 if kind == "mean" else a + b * t
+    if iscoat:
+        depth = 1 if depth < 30 else 2
+        for i in range(len(cbfc)):
+            if cbfc[i][0] == categ and cbfc[i][1] == depth:
+                a = cbfc[i][2]
+                b = cbfc[i][3]
+        cbf = a + b * t / 2 if kind == "mean" else a + b * t
+    else:
+        cbf = 1
     return cbf
 
 # Calculation of current demand (I)
@@ -121,8 +127,14 @@ def idem(part):
         idem = (idens[1][1] / 1000.0) * calc_rf_sa(rflength, rfheight) * cbf(categ, depth, t, kind)
         return idem
 
-#print(calc_wet_hull_sa(length, breadth, draft, cb))
-print(calc_rf_sa(rflength, rfheight))
+## print temporary output
+# surface areas    
+print('area ', part, calc_wet_hull_sa(length, breadth, draft, cb))
+#print(calc_rf_sa(rflength, rfheight))
 #print(calc_tunnels_sa(diam, tlength))
-print(cbf(categ, depth, t, kind))
-print(idem(part))
+
+# coating breakdown factor
+print('coating breakdwn fact ', cbf(categ, depth, t, kind))
+
+# current demand
+print('current req. ', idem(part))
