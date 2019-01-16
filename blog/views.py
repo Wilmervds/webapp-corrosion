@@ -16,18 +16,23 @@ from django.http import HttpResponse
 from django.template.loader import render_to_string
 
 from weasyprint import HTML
+import os
+
+
+def calculate(request):
+    return render(request, 'blog/calculate.html')
 
 
 def html_to_pdf_view(request):
-    html_string = render_to_string('blog/about.html', {'title': 'About', 'form': NameForm()})
+    html_string = render_to_string('blog/calculate.html')
 
     html = HTML(string=html_string)
-    html.write_pdf(target='test.pdf');
+    html.write_pdf(target='Report.pdf');
 
-    fs = FileSystemStorage('C:/webapp/git')
-    with fs.open('test.pdf') as pdf:
+    fs = FileSystemStorage(os.getcwd())
+    with fs.open('Report.pdf') as pdf:
         response = HttpResponse(pdf, content_type='application/pdf')
-        response['Content-Disposition'] = 'attachment; filename="test.pdf"'
+        response['Content-Disposition'] = 'attachment; filename="Report.pdf"'
         return response
 
     return response

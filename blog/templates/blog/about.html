@@ -1,61 +1,100 @@
 {% extends "blog/base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
-    <h2>Ships</h2>
+    <h2>Welcome to Corrosion's CP tool!</h2>
     <article class="media content-section">
         <div class="media-body">
-            <h5>Current requirements</h5>
-            <div class="article-metadata">
-                <a class="mr-2" href="some post">will be link to source post</a>
-            </div>
-            <div class="article-metadata">
-                <a class="mr-2" href="title">possible link to equation page</a>
-            </div>
-            <p class="article-content">Equation to calculate current requirements</p>
-        </div>
-    </article>
-    <article class="media content-section">
-        <div class="media-body">
-            <h5>Anode surface</h5>
-            <div class="article-metadata">
-                <a class="mr-2" href="some post">post link</a>
-            </div>
-            <div class="article-metadata">
-                <a class="mr-2" href="title">link to equation page</a>
-            </div>
-            <p class="article-content">Output is required number or surface per anode type </p>
+            <p> This is a calculation tool for cathodic protection projects. It is based on recommended practices and
+                guidelines accepted by DNV, NACE and other recognized international organizations.
+                All procedures including background for equations used are fully documented and can be accessed by
+                following appropriate links.A reference list from which all procedures are based is also included.
+                It is built using a log in procedure with normal users and admins. Each user has access to a database
+                in which all his or her ‘projects’ are stored. Admins can see all projects.[[In the future, keys should
+                be included to link this tool projects to corrosion system projects (e.g. in exact software).]] </p>
         </div>
     </article>
 
-    <h2>Wind Turbines</h2>
+    <h2>Overview of procedure</h2>
+
+    <div class="media-body">
+        <p> Follow links on the right depending on the type of project.
+            Before starting a new project, make sure the steps below are clear and
+            the information described is available. </p>
+    </div>
+    <h3>Step 1. Identify structure to be protected</h3>
     <article class="media content-section">
-        <div class="media-body">
-            <h5>Example</h5>
-            <div class="article-metadata">
-                <a class="mr-2" href="some post">link to post</a>
-            </div>
-            <div class="article-metadata">
-                <a class="mr-2" href="title">equation page</a>
-            </div>
-            <p class="article-content">Example equation abstract</p>
-        </div>
+    <div class="media-body">
+        <ul>
+            <li>What kind of structure →  for example a vessel, a barge, or an offshore foundation</li>
+            <li>Metal type(s) →  Main metal to be protected, e.g. mild steel</li>
+            <li>Operation conditions → What operation conditions could affect CP e.g. flow rates, friction, etc</li>
+            <li>Surface area to be protected → Is this info available? Do we have access to drawings, etc.?</li>
+            <li>Coatings → Presence (or absence) of coatings is very important in CP design. Which areas are coated? What kind o coating? Coating state?</li>
+            <li>Similar structures → Is there data from similar structures. What are the experiences?</li>
+            <li>Target design life → For how long do we need to keep protection?</li>
+        </ul>
+    </div>
     </article>
+    <h3>Step 2. Environmental conditions</h3>
     <article class="media content-section">
-        <div class="media-body">
-            <h5>Equation name</h5>
-            <div class="article-metadata">
-                <a class="mr-2" href="some post">Example post link</a>
-            </div>
-            <div class="article-metadata">
-                <a class="mr-2" href="title">Equation page</a>
-            </div>
-            <p class="article-content">Equation short explanation</p>
-        </div>
+    <div class="media-body">
+        <ul>
+            <li>Geographic location of structure (tropical, Mediterranean, North Sea, etc)</li>
+            <li>Type of water (freshwater, brackish water, seawater)</li>
+            <li>Depth</li>
+        </ul>
+    </div>
+    </article>
+    <h3>Step 3. Current demand</h3>
+    <article class="media content-section">
+    <div class="media-body">
+        <p>For calculating current demand you would need:</p>
+        <ul>
+            <li>Required current density in A/m2 (depends on step 1 and step 2). See annex A</li>
+            <li>Surface area to be protected in m2 (from step 1)</li>
+            <li>Coating breakdown factor (from step1) See annex A</li>
+        </ul>
+    </div>
+    </article>
+    <h3>Step 4. Determine anode type to be used (GACP)</h3>
+    <article class="media content-section">
+    <div class="media-body">
+        <p>Choose anode alloy type to be used based on the following criteria:</p>
+        <ul>
+            <li>Zinc (if no Aluminum possible) for seawater</li>
+            <li>Aluminum for brackish and seawater</li>
+            <li>Magnesium for freshwater (rare)</li>
+        </ul>
+    </div>
+    </article>
+    <h3>Step 5. Determine anode mass requirements (GACP)</h3>
+    <article class="media content-section">
+    <div class="media-body">
+        <p>For calculating anode mass you would need:</p>
+        <ul>
+            <li>The current demand in Amps (step 3)</li>
+            <li>The design life in years (step 1)</li>
+            <li>Anode utilization factor (link to reference page)</li>
+            <li>Anode capacity in Ah/Kg (link to reference page)</li>
+        </ul>
+    </div>
+    </article>
+    <h3>Step 5. Determine anode current output (GACP)</h3>
+    <article class="media content-section">
+    <div class="media-body">
+        <p>For calculating anode current output you would need:</p>
+        <ul>
+            <li>Anode resistance (resistance to earth):</li>
+            <li>Anode shape to determine equation to be used</li>
+            <li>Water resistivity in ohm.cm</li>
+            <li>Length and radius of anode in cm</li>
+            <li>Exposed surface area and mean of anode sides</li>
+        </ul>
+    </div>
     </article>
 
+    <!--
     <h2>Offshore Structures</h2>
-
-
     <div class="content-section">
         <form method="POST">
             {% csrf_token %}
@@ -70,5 +109,5 @@
             </div>
         </form>
     </div>
-
+    -->
 {% endblock content %}

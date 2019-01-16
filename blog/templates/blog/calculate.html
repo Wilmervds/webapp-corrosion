@@ -29,7 +29,7 @@
           <div class="collapse navbar-collapse" id="navbarToggle">
             <div class="navbar-nav mr-auto">
               <a class="nav-item nav-link" href="{% url 'blog-about' %}">Home</a>
-              <!-- <a class="nav-item nav-link" href="{% url 'blog-about' %}">Overview</a> -->
+              <!--  <a class="nav-item nav-link" href="{% url 'blog-about' %}">Overview</a> -->
               <a class="nav-item nav-link" href="{% url 'calculate' %}">Calculate</a>
               <!-- PDF test -->
               <a class="nav-item nav-link" href="{% url 'blog-pdf' %}">PDF</a>
@@ -59,26 +59,28 @@
               </div>
             {% endfor %}
           {% endif %}
-          {% block content %}{% endblock %}
-        </div>
-        <div class="col-md-4">
-          <div class="content-section">
-            <h3>ICCP calculations</h3>
-            <p class='text-muted'>
-              <ul class="list-group">
-                <a class="list-group-item list-group-item-light" href="{% url 'calculate' %}">ICCP for vessels</a>
-                <a class="list-group-item list-group-item-light" href="{% url 'calculate' %}">ICCP for offshore wind</a>
-                <a class="list-group-item list-group-item-light" href="{% url 'calculate' %}">ICCP for special projects</a>
-              </ul>
-            </p>
-            <h3>GACP calculations</h3>
-            <p class='text-muted'>
-              <ul class="list-group">
-                <a class="list-group-item list-group-item-light" href="{% url 'calculate' %}">GACP for vessels</a>
-                <a class="list-group-item list-group-item-light" href="{% url 'calculate' %}">GACP for special projects</a>
-              </ul>
-            </p>
-          </div>
+          <!--  {% block content %}{% endblock %} Put content under here-->
+
+            <form name="myForm" onsubmit="wethullsa(); return false;">
+                    Length: <br><input type="number" name="length" value=127.50><br>
+                    Breadth: <br><input type="number" name="breadth" value=28.0><br>
+                    Draft: <br><input type="number" name="draft" value=10.75><br>
+                    cb: <br><input type="number" name="cb" value=0.6><br><br>
+                    <input type="submit" value="Submit"><br>
+            </form>
+
+            <p id="none">wethullsa:</p><p id="wethullsa"></p>
+
+            <script>
+            function wethullsa() {
+              var length = document.forms["myForm"]["length"].value;
+              var breadth = document.forms["myForm"]["breadth"].value;
+              var draft = document.forms["myForm"]["draft"].value;
+              var cb = document.forms["myForm"]["cb"].value;
+              var wethullsa = (1.7 * length * draft) + (cb * length * breadth)
+              document.getElementById("wethullsa").innerHTML = wethullsa;
+            }
+            </script>
         </div>
       </div>
     </main>
